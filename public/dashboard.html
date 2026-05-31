@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<a href="dashboard.html">Dashboard</a>
+<a href="nutrition.html">Nutrition</a>
+<a href="progress.html">Progress</a>
+<a href="profile.html">Profile</a>
+<a href="#" onclick="logout()">Logout</a>
+</nav>
+
+<div class="container">
+
+<h1 id="welcome"></h1>
+
+<div class="summary-grid">
+
+<div class="summary-card">
+<h3>BMI</h3>
+<p id="bmi">--</p>
+</div>
+
+<div class="summary-card">
+<h3>Calories</h3>
+<p id="calories">--</p>
+</div>
+
+<div class="summary-card">
+<h3>Protein</h3>
+<p id="protein">--</p>
+</div>
+
+<div class="summary-card">
+<h3>Carbs</h3>
+<p id="carbs">--</p>
+</div>
+
+<div class="summary-card">
+<h3>Fats</h3>
+<p id="fats">--</p>
+</div>
+
+<div class="summary-card">
+<h3>Goal</h3>
+<p id="goal">--</p>
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+
+const user =
+localStorage.getItem("username");
+
+document.getElementById("welcome")
+.innerText =
+"Welcome " + user;
+
+loadDashboard();
+
+function logout(){
+
+localStorage.clear();
+
+window.location.href =
+"index.html";
+
+}
+
+</script>
+
+</body>
+</html>

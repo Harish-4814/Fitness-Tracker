@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nutrition</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<a href="dashboard.html">Dashboard</a>
+<a href="nutrition.html">Nutrition</a>
+<a href="progress.html">Progress</a>
+<a href="profile.html">Profile</a>
+<a href="index.html">Logout</a>
+</nav>
+
+<div class="container">
+
+<h1>Nutrition Tracker</h1>
+
+<div class="card">
+
+<select id="foodSelect">
+<option>Select Food</option>
+</select>
+
+<input
+type="number"
+id="quantity"
+placeholder="Quantity(per 100 grams)"
+value="1">
+
+<button onclick="addFood()">
+Add Food
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Today's Intake</h2>
+
+<p id="totalCalories">
+Calories: 0 kcal
+</p>
+
+<p id="totalProtein">
+Protein: 0 g
+</p>
+
+<p id="totalCarbs">
+Carbs: 0 g
+</p>
+
+<p id="totalFats">
+Fats: 0 g
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>Food Logs</h2>
+
+<div id="foodLogs"></div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+loadFoods();
+loadFoodLogs();
+</script>
+
+</body>
+</html>
