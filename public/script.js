@@ -117,6 +117,9 @@ async function saveProfile(){
             goalWeight:
             document.getElementById("goalWeight").value,
 
+            goalDuration:
+            document.getElementById("goalDuration").value,
+
             activityLevel:
             document.getElementById("activityLevel").value,
 
@@ -128,27 +131,44 @@ async function saveProfile(){
 
         };
 
+        console.log(profileData);
+
         const res = await fetch(
-        `${API}/profile/save`,
-        {
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(profileData)
-        });
 
-        const data = await res.json();
+            "http://localhost:5000/api/profile/save",
 
-        document.getElementById("message").innerText =
+            {
+
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify(profileData)
+
+            }
+
+        );
+
+        const data =
+        await res.json();
+
+        document.getElementById("message")
+        .innerText =
         data.message;
 
     }
     catch(error){
 
-        console.log(error);
+        console.log(
+            "PROFILE ERROR:",
+            error
+        );
 
-        alert("Error Saving Profile");
+        document.getElementById("message")
+        .innerText =
+        "Error Saving Profile";
 
     }
 
@@ -384,7 +404,7 @@ async function loadFoodLogs(){
 
             logsDiv.innerHTML += `
             <p>
-            ${log.foodName} - ${log.quantity * 100}g
+            ${log.foodName} - ${log.quantity }g
             </p>
             `;
 

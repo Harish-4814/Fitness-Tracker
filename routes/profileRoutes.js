@@ -53,48 +53,120 @@ router.get("/dashboard/:username", async (req, res) => {
 
         }
 
-        const heightM = profile.height / 100;
+        const heightM =
+        profile.height / 100;
 
         const bmi =
         profile.currentWeight /
         (heightM * heightM);
 
+        /* BASE CALORIES */
+
         let calories =
-        profile.currentWeight * 30;
+        profile.currentWeight * 24;
 
-        if (profile.goal === "Muscle Gain") {
-            calories += 300;
+        /* ACTIVITY LEVEL */
+
+        switch(profile.activityLevel){
+
+            case "Sedentary":
+                calories *= 1.2;
+                break;
+
+            case "Lightly Active":
+                calories *= 1.375;
+                break;
+
+            case "Moderately Active":
+                calories *= 1.55;
+                break;
+
+            case "Very Active":
+                calories *= 1.725;
+                break;
+
+            default:
+                calories *= 1.2;
         }
 
-        if (profile.goal === "Fat Loss") {
-            calories -= 300;
+        /* GOAL DURATION */
+
+        const weightDifference =
+        Math.abs(
+            profile.goalWeight -
+            profile.currentWeight
+        );
+
+        const totalCaloriesNeeded =
+        weightDifference * 7700;
+
+        const days =
+        profile.goalDuration * 7;
+
+        const dailyAdjustment =
+        Math.round(
+            totalCaloriesNeeded / days
+        );
+
+        if(profile.goal === "Fat Loss"){
+
+            calories -= dailyAdjustment;
+
         }
+        else if(profile.goal === "Muscle Gain"){
+
+            calories += dailyAdjustment;
+
+        }
+
+        calories =
+        Math.round(calories);
+
+        /* MACROS */
 
         const protein =
-        Math.round(profile.currentWeight * 2);
+        Math.round(
+            profile.currentWeight * 2
+        );
 
         const fats =
-        Math.round(profile.currentWeight * 0.8);
+        Math.round(
+            profile.currentWeight * 0.8
+        );
 
         const carbs =
         Math.round(
-            (calories -
-            (protein * 4 + fats * 9))
-            / 4
+            (
+                calories -
+                (
+                    protein * 4 +
+                    fats * 9
+                )
+            ) / 4
         );
 
         res.json({
-            bmi: bmi.toFixed(2),
+
+            bmi:
+            bmi.toFixed(2),
+
             calories,
+
             protein,
+
             carbs,
+
             fats,
+
             currentWeight:
             profile.currentWeight,
+
             goalWeight:
             profile.goalWeight,
+
             goal:
             profile.goal
+
         });
 
     } catch (error) {
